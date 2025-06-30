@@ -1,4 +1,5 @@
 import { createSignal, createResource, Show, For } from 'solid-js';
+import './styles.css';
 
 function App() {
   const [count, setCount] = createSignal(0);
@@ -72,10 +73,10 @@ function App() {
   };
 
   return (
-    <div style="padding: 20px; font-family: Arial, sans-serif;">
+    <div class="container">
       <p>This is a SolidJS application with Datasette backend support.</p>
       
-      <div style="margin: 20px 0; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
+      <div class="card">
         <h2>Datasette Integration</h2>
         
         <div style="margin: 10px 0;">
@@ -134,7 +135,7 @@ function App() {
           <div style="margin: 20px 0;">
             <h3>Table Data: {selectedTable()}</h3>
             <div style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
-              <div style="margin-top: 10px;">
+              <div class="jump-to-page">
                 <label>Jump to page:</label>
                 <input 
                   type="number" 
@@ -148,12 +149,12 @@ function App() {
                 <button onClick={() => setCurrentPage(100)} style={{ marginLeft: '10px' }}>100</button>
               </div>
               <Show when={displayedRow().length > 0}>
-                <table style="width: 100%; border-collapse: collapse;">
+                <table class="table">
                   <thead>
                     <tr>
                       <For each={tableData().columns}>
                         {(column) => (
-                          <th style="border: 1px solid #ddd; padding: 8px; background-color: #f5f5f5;">
+                          <th>
                             {column}
                           </th>
                         )}
@@ -166,7 +167,7 @@ function App() {
                         <tr>
                           <For each={row}>
                             {(cell) => (
-                              <td style="border: 1px solid #ddd; padding: 8px;">
+                              <td>
                                 {String(cell)}
                               </td>
                             )}
