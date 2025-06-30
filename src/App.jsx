@@ -65,24 +65,8 @@ function App() {
 
   return (
     <div style="padding: 20px; font-family: Arial, sans-serif;">
-      <h1>Hello {name()}!</h1>
       <p>This is a SolidJS application with Datasette backend support.</p>
       
-      <div style="margin: 20px 0;">
-        <button onClick={() => setCount(count() + 1)}>
-          Count: {count()}
-        </button>
-      </div>
-      
-      <div style="margin: 20px 0;">
-        <input 
-          type="text" 
-          value={name()} 
-          onInput={(e) => setName(e.target.value)}
-          placeholder="Enter your name"
-        />
-      </div>
-
       <div style="margin: 20px 0; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
         <h2>Datasette Integration</h2>
         
@@ -190,8 +174,6 @@ function App() {
           <p>Loading table data...</p>
         </Show>
       </div>
-      
-      <p>Click the button or type in the input to see SolidJS reactivity in action!</p>
     </div>
   );
 }
