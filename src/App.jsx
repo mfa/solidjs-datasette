@@ -170,11 +170,16 @@ function App() {
             </div>
             <div style="margin-top: 10px;">
               <label>Jump to page:</label>
-              <select onChange={(e) => setCurrentPage(Number(e.target.value))} style="margin-left: 10px;">
-                <option value={1}>1</option>
-                <option value={10}>10</option>
-                <option value={100}>100</option>
-              </select>
+              <input 
+                type="number" 
+                min={1} 
+                onInput={(e) => setCurrentPage(Number(e.target.value))} 
+                style="margin-left: 10px; width: 50px;"
+                placeholder="Page"
+              />
+              <button onClick={() => setCurrentPage(1)} style="margin-left: 10px;">1</button>
+              <button onClick={() => setCurrentPage(10)} style="marginLeft: 10px;">10</button>
+              <button onClick={() => setCurrentPage(100)} style="marginLeft: 10px;">100</button>
             </div>
           </div>
         </Show>
