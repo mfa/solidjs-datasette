@@ -2,20 +2,16 @@ import { createSignal, createResource, Show, For } from 'solid-js';
 import './styles.css';
 
 function App() {
-  const [count, setCount] = createSignal(0);
-  const [name, setName] = createSignal('SolidJS');
   const [datasetteUrl, setDatasetteUrl] = createSignal('http://localhost:8001');
   const [selectedDatabase, setSelectedDatabase] = createSignal('');
   const [selectedTable, setSelectedTable] = createSignal('');
   const [currentPage, setCurrentPage] = createSignal(1);
 
-  // Ensure the URL ends with a slash
   const formattedUrl = () => {
     const url = datasetteUrl();
     return url.endsWith('/') ? url : `${url}/`;
   };
 
-  // Fetch databases from Datasette
   const [databases] = createResource(
     formattedUrl,
     async (url) => {
@@ -31,7 +27,6 @@ function App() {
     }
   );
 
-  // Fetch tables from selected database
   const [tables] = createResource(
     () => selectedDatabase() && `${formattedUrl()}${selectedDatabase()}`,
     async (url) => {
@@ -48,7 +43,6 @@ function App() {
     }
   );
 
-  // Fetch data from selected table
   const [tableData] = createResource(
     () => selectedTable() && `${formattedUrl()}${selectedDatabase()}/${selectedTable()}`,
     async (url) => {
@@ -65,11 +59,10 @@ function App() {
     }
   );
 
-  // Calculate the displayed row based on pagination
   const displayedRow = () => {
     const rows = tableData()?.rows || [];
     const startIndex = (currentPage() - 1);
-    return rows[startIndex] ? [rows[startIndex]] : []; // Always return one row
+    return rows[startIndex] ? [rows[startIndex]] : [];
   };
 
   return (
@@ -96,7 +89,7 @@ function App() {
             onChange={(e) => {
               setSelectedDatabase(e.target.value);
               setSelectedTable('');
-              setCurrentPage(1); // Reset to first page when database changes
+              setCurrentPage(1);
             }}
           >
             <option value="">Select a database</option>
@@ -115,7 +108,7 @@ function App() {
               value={selectedTable()} 
               onChange={(e) => {
                 setSelectedTable(e.target.value);
-                setCurrentPage(1); // Reset to first page when table changes
+                setCurrentPage(1);
               }}
             >
               <option value="">Select a table</option>
