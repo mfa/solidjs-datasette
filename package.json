@@ -4,9 +4,9 @@
   "description": "A simple SolidJS hello world app",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "serve": "vite preview"
+    "dev": "bun run vite",
+    "build": "bun run vite build",
+    "serve": "bun run vite preview"
   },
   "devDependencies": {
     "vite": "^5.0.0",
