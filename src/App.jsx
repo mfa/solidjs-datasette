@@ -79,18 +79,17 @@ function App() {
       <div class="card">
         <h2>Datasette Integration</h2>
         
-        <div style="margin: 10px 0;">
+        <div class="input-group">
           <label>Datasette URL:</label>
           <input 
             type="text" 
             value={datasetteUrl()} 
             onInput={(e) => setDatasetteUrl(e.target.value)}
             placeholder="http://localhost:8001"
-            style="margin-left: 10px; width: 200px;"
           />
         </div>
 
-        <div style="margin: 10px 0;">
+        <div class="input-group">
           <label>Database:</label>
           <select 
             value={selectedDatabase()} 
@@ -99,7 +98,6 @@ function App() {
               setSelectedTable('');
               setCurrentPage(1); // Reset to first page when database changes
             }}
-            style="margin-left: 10px;"
           >
             <option value="">Select a database</option>
             <Show when={databases()}>
@@ -111,7 +109,7 @@ function App() {
         </div>
 
         <Show when={selectedDatabase()}>
-          <div style="margin: 10px 0;">
+          <div class="input-group">
             <label>Table:</label>
             <select 
               value={selectedTable()} 
@@ -119,7 +117,6 @@ function App() {
                 setSelectedTable(e.target.value);
                 setCurrentPage(1); // Reset to first page when table changes
               }}
-              style="margin-left: 10px;"
             >
               <option value="">Select a table</option>
               <Show when={tables()}>
@@ -132,21 +129,20 @@ function App() {
         </Show>
 
         <Show when={tableData()}>
-          <div style="margin: 20px 0;">
+          <div class="table-container">
             <h3>Table Data: {selectedTable()}</h3>
-            <div style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
+            <div class="max-height">
               <div class="jump-to-page">
                 <label>Jump to page:</label>
                 <input 
                   type="number" 
                   min={1} 
                   onInput={(e) => setCurrentPage(Number(e.target.value))} 
-                  style="margin-left: 10px; width: 50px;"
                   placeholder="Page"
                 />
-                <button onClick={() => setCurrentPage(1)} style="margin-left: 10px;">1</button>
-                <button onClick={() => setCurrentPage(10)} style={{ marginLeft: '10px' }}>10</button>
-                <button onClick={() => setCurrentPage(100)} style={{ marginLeft: '10px' }}>100</button>
+                <button onClick={() => setCurrentPage(1)}>1</button>
+                <button onClick={() => setCurrentPage(10)}>10</button>
+                <button onClick={() => setCurrentPage(100)}>100</button>
               </div>
               <Show when={displayedRow().length > 0}>
                 <table class="table">
