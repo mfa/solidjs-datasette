@@ -6,6 +6,8 @@ function App() {
   const [datasetteUrl, setDatasetteUrl] = createSignal('http://localhost:8001');
   const [selectedDatabase, setSelectedDatabase] = createSignal('');
   const [selectedTable, setSelectedTable] = createSignal('');
+  const [pageSize, setPageSize] = createSignal(1); // Default to show 1 row
+  const [currentPage, setCurrentPage] = createSignal(1);
 
   // Ensure the URL ends with a slash
   const formattedUrl = () => {
@@ -38,8 +40,7 @@ function App() {
         const response = await fetch(`${url}.json`);
         if (!response.ok) throw new Error(`Failed to fetch tables: ${response.statusText}`);
         const data = await response.json();
-        // Extract table names from the response
-        return data.tables.map(table => table.name); // Assuming table names are in the 'name' property
+        return data.tables.map(table => table.name);
       } catch (error) {
         console.error('Error fetching tables:', error);
         return [];
@@ -63,6 +64,13 @@ function App() {
       }
     }
   );
+
+  // Calculate the displayed rows based on pagination
+  const displayedRows = () => {
+    const rows = tableData()?.rows || [];
+    const startIndex = (currentPage() - 1) * pageSize();
+    return rows.slice(startIndex, startIndex + pageSize());
+  };
 
   return (
     <div style="padding: 20px; font-family: Arial, sans-serif;">
@@ -89,6 +97,7 @@ function App() {
             onChange={(e) => {
               setSelectedDatabase(e.target.value);
               setSelectedTable('');
+              setCurrentPage(1); // Reset to first page when database changes
             }}
             style="margin-left: 10px;"
           >
@@ -106,7 +115,10 @@ function App() {
             <label>Table:</label>
             <select 
               value={selectedTable()} 
-              onChange={(e) => setSelectedTable(e.target.value)}
+              onChange={(e) => {
+                setSelectedTable(e.target.value);
+                setCurrentPage(1); // Reset to first page when table changes
+              }}
               style="margin-left: 10px;"
             >
               <option value="">Select a table</option>
@@ -123,7 +135,7 @@ function App() {
           <div style="margin: 20px 0;">
             <h3>Table Data: {selectedTable()}</h3>
             <div style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
-              <Show when={tableData()?.rows?.length > 0}>
+              <Show when={displayedRows().length > 0}>
                 <table style="width: 100%; border-collapse: collapse;">
                   <thead>
                     <tr>
@@ -137,7 +149,7 @@ function App() {
                     </tr>
                   </thead>
                   <tbody>
-                    <For each={tableData().rows.slice(0, 50)}>
+                    <For each={displayedRows()}>
                       {(row) => (
                         <tr>
                           <For each={row}>
@@ -152,15 +164,22 @@ function App() {
                     </For>
                   </tbody>
                 </table>
-                <Show when={tableData().rows.length > 50}>
-                  <p style="margin-top: 10px; font-style: italic;">
-                    Showing first 50 rows of {tableData().rows.length} total rows
-                  </p>
-                </Show>
               </Show>
-              <Show when={!tableData()?.rows?.length}>
+              <Show when={displayedRows().length === 0}>
                 <p>No data found in this table.</p>
               </Show>
+            </div>
+            <div style="margin-top: 10px;">
+              <label>Show:</label>
+              <select onChange={(e) => setPageSize(Number(e.target.value))} style="margin-left: 10px;">
+                <option value={1}>1</option>
+                <option value={10}>10</option>
+                <option value={100}>100</option>
+              </select>
+              <button onClick={() => setCurrentPage(1)} style="margin-left: 10px;">First</button>
+              <button onClick={() => setCurrentPage(Math.max(1, currentPage() - 1))} style="margin-left: 10px;">Previous</button>
+              <button onClick={() => setCurrentPage(currentPage() + 1)} style="margin-left: 10px;">Next</button>
+              <button onClick={() => setCurrentPage(Math.ceil((tableData()?.rows.length || 1) / pageSize()))} style="margin-left: 10px;">Last</button>
             </div>
           </div>
         </Show>
