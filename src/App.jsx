@@ -19,7 +19,7 @@ function App() {
     async (url) => {
       try {
         const response = await fetch(`${url}.json`);
-        if (!response.ok) throw new Error('Failed to fetch databases');
+        if (!response.ok) throw new Error(`Failed to fetch databases: ${response.statusText}`);
         const data = await response.json();
         return Object.keys(data);
       } catch (error) {
@@ -36,7 +36,7 @@ function App() {
       if (!url) return [];
       try {
         const response = await fetch(`${url}.json`);
-        if (!response.ok) throw new Error('Failed to fetch tables');
+        if (!response.ok) throw new Error(`Failed to fetch tables: ${response.statusText}`);
         const data = await response.json();
         return Object.keys(data.tables || {});
       } catch (error) {
@@ -53,7 +53,7 @@ function App() {
       if (!url) return null;
       try {
         const response = await fetch(`${url}.json`);
-        if (!response.ok) throw new Error('Failed to fetch table data');
+        if (!response.ok) throw new Error(`Failed to fetch table data: ${response.statusText}`);
         const data = await response.json();
         return data;
       } catch (error) {
