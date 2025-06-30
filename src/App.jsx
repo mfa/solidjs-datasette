@@ -31,7 +31,7 @@ function App() {
 
   // Fetch tables from selected database
   const [tables] = createResource(
-    () => selectedDatabase() && `${formattedUrl()}/${selectedDatabase()}`,
+    () => selectedDatabase() && `${formattedUrl()}${selectedDatabase()}`,
     async (url) => {
       if (!url) return [];
       try {
@@ -48,7 +48,7 @@ function App() {
 
   // Fetch data from selected table
   const [tableData] = createResource(
-    () => selectedTable() && `${formattedUrl()}/${selectedDatabase()}/${selectedTable()}`,
+    () => selectedTable() && `${formattedUrl()}${selectedDatabase()}/${selectedTable()}`,
     async (url) => {
       if (!url) return null;
       try {
