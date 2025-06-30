@@ -134,6 +134,19 @@ function App() {
           <div style="margin: 20px 0;">
             <h3>Table Data: {selectedTable()}</h3>
             <div style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
+              <div style="margin-top: 10px;">
+                <label>Jump to page:</label>
+                <input 
+                  type="number" 
+                  min={1} 
+                  onInput={(e) => setCurrentPage(Number(e.target.value))} 
+                  style="margin-left: 10px; width: 50px;"
+                  placeholder="Page"
+                />
+                <button onClick={() => setCurrentPage(1)} style="margin-left: 10px;">1</button>
+                <button onClick={() => setCurrentPage(10)} style={{ marginLeft: '10px' }}>10</button>
+                <button onClick={() => setCurrentPage(100)} style={{ marginLeft: '10px' }}>100</button>
+              </div>
               <Show when={displayedRow().length > 0}>
                 <table style="width: 100%; border-collapse: collapse;">
                   <thead>
@@ -167,19 +180,6 @@ function App() {
               <Show when={displayedRow().length === 0}>
                 <p>No data found in this table.</p>
               </Show>
-            </div>
-            <div style="margin-top: 10px;">
-              <label>Jump to page:</label>
-              <input 
-                type="number" 
-                min={1} 
-                onInput={(e) => setCurrentPage(Number(e.target.value))} 
-                style="margin-left: 10px; width: 50px;"
-                placeholder="Page"
-              />
-              <button onClick={() => setCurrentPage(1)} style="margin-left: 10px;">1</button>
-              <button onClick={() => setCurrentPage(10)} style="marginLeft: 10px;">10</button>
-              <button onClick={() => setCurrentPage(100)} style="marginLeft: 10px;">100</button>
             </div>
           </div>
         </Show>
