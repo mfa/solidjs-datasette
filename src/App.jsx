@@ -6,7 +6,6 @@ function App() {
   const [datasetteUrl, setDatasetteUrl] = createSignal('http://localhost:8001');
   const [selectedDatabase, setSelectedDatabase] = createSignal('');
   const [selectedTable, setSelectedTable] = createSignal('');
-  const [pageSize, setPageSize] = createSignal(1); // Default to show 1 row
   const [currentPage, setCurrentPage] = createSignal(1);
 
   // Ensure the URL ends with a slash
@@ -65,11 +64,11 @@ function App() {
     }
   );
 
-  // Calculate the displayed rows based on pagination
-  const displayedRows = () => {
+  // Calculate the displayed row based on pagination
+  const displayedRow = () => {
     const rows = tableData()?.rows || [];
-    const startIndex = (currentPage() - 1) * pageSize();
-    return rows.slice(startIndex, startIndex + pageSize());
+    const startIndex = (currentPage() - 1);
+    return rows[startIndex] ? [rows[startIndex]] : []; // Always return one row
   };
 
   return (
@@ -135,7 +134,7 @@ function App() {
           <div style="margin: 20px 0;">
             <h3>Table Data: {selectedTable()}</h3>
             <div style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
-              <Show when={displayedRows().length > 0}>
+              <Show when={displayedRow().length > 0}>
                 <table style="width: 100%; border-collapse: collapse;">
                   <thead>
                     <tr>
@@ -149,7 +148,7 @@ function App() {
                     </tr>
                   </thead>
                   <tbody>
-                    <For each={displayedRows()}>
+                    <For each={displayedRow()}>
                       {(row) => (
                         <tr>
                           <For each={row}>
@@ -165,21 +164,17 @@ function App() {
                   </tbody>
                 </table>
               </Show>
-              <Show when={displayedRows().length === 0}>
+              <Show when={displayedRow().length === 0}>
                 <p>No data found in this table.</p>
               </Show>
             </div>
             <div style="margin-top: 10px;">
-              <label>Show:</label>
-              <select onChange={(e) => setPageSize(Number(e.target.value))} style="margin-left: 10px;">
+              <label>Jump to page:</label>
+              <select onChange={(e) => setCurrentPage(Number(e.target.value))} style="margin-left: 10px;">
                 <option value={1}>1</option>
                 <option value={10}>10</option>
                 <option value={100}>100</option>
               </select>
-              <button onClick={() => setCurrentPage(1)} style="margin-left: 10px;">First</button>
-              <button onClick={() => setCurrentPage(Math.max(1, currentPage() - 1))} style="margin-left: 10px;">Previous</button>
-              <button onClick={() => setCurrentPage(currentPage() + 1)} style="margin-left: 10px;">Next</button>
-              <button onClick={() => setCurrentPage(Math.ceil((tableData()?.rows.length || 1) / pageSize()))} style="margin-left: 10px;">Last</button>
             </div>
           </div>
         </Show>
