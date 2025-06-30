@@ -38,7 +38,8 @@ function App() {
         const response = await fetch(`${url}.json`);
         if (!response.ok) throw new Error(`Failed to fetch tables: ${response.statusText}`);
         const data = await response.json();
-        return Object.keys(data.tables || {});
+        // Extract table names from the response
+        return data.tables.map(table => table.name); // Assuming table names are in the 'name' property
       } catch (error) {
         console.error('Error fetching tables:', error);
         return [];
