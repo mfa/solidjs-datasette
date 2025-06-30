@@ -7,9 +7,15 @@ function App() {
   const [selectedDatabase, setSelectedDatabase] = createSignal('');
   const [selectedTable, setSelectedTable] = createSignal('');
 
+  // Ensure the URL ends with a slash
+  const formattedUrl = () => {
+    const url = datasetteUrl();
+    return url.endsWith('/') ? url : `${url}/`;
+  };
+
   // Fetch databases from Datasette
   const [databases] = createResource(
-    datasetteUrl,
+    formattedUrl,
     async (url) => {
       try {
         const response = await fetch(`${url}.json`);
@@ -25,7 +31,7 @@ function App() {
 
   // Fetch tables from selected database
   const [tables] = createResource(
-    () => selectedDatabase() && `${datasetteUrl()}/${selectedDatabase()}`,
+    () => selectedDatabase() && `${formattedUrl()}/${selectedDatabase()}`,
     async (url) => {
       if (!url) return [];
       try {
@@ -42,7 +48,7 @@ function App() {
 
   // Fetch data from selected table
   const [tableData] = createResource(
-    () => selectedTable() && `${datasetteUrl()}/${selectedDatabase()}/${selectedTable()}`,
+    () => selectedTable() && `${formattedUrl()}/${selectedDatabase()}/${selectedTable()}`,
     async (url) => {
       if (!url) return null;
       try {
