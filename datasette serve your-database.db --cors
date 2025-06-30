@@ -1,0 +1,7 @@
+
+Replace `your-database.db` with the actual name of your database file.
+
+## Restricting Allowed Origins
+
+If you want to restrict the allowed origins to only your SolidJS application, use the following command:
+
