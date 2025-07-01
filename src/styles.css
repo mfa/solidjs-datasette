@@ -5,11 +5,10 @@ body {
 }
 
 .container {
-    padding: 20px; /* This can remain as it is */
+    padding: 20px; 
 }
 
 .card {
-    margin: 20px 0; /* Replaced with Bulma class */
 }
 
 .table {
@@ -21,11 +20,9 @@ body {
 }
 
 .jump-to-page {
-    margin-top: 10px; /* Replaced with Bulma class */
 }
 
 button {
-    margin-left: 10px; /* Replaced with Bulma class */
     cursor: pointer;
 }
 
