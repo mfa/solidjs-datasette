@@ -146,7 +146,7 @@ function App() {
                 type="date" 
                 onInput={(e) => setSelectedDate(e.target.value)} 
               />
-              <button class="button" onClick={handleDateSubmit}>Submit</button>
+              <button class="button ml-1" onClick={handleDateSubmit}>Submit</button>
             </div>
           </div>
           <div class="table-container">
@@ -161,9 +161,9 @@ function App() {
                   onInput={(e) => setCurrentPage(Number(e.target.value))} 
                   placeholder="Page"
                 />
-                <button class="button" onClick={() => setCurrentPage(1)}>1</button>
-                <button class="button" onClick={() => setCurrentPage(10)}>10</button>
-                <button class="button" onClick={() => setCurrentPage(100)}>100</button>
+                <button class="button ml-1" onClick={() => setCurrentPage(1)}>1</button>
+                <button class="button ml-1" onClick={() => setCurrentPage(10)}>10</button>
+                <button class="button ml-1" onClick={() => setCurrentPage(100)}>100</button>
               </div>
               <Show when={displayedRows().length > 0}>
                 <table class="table">
