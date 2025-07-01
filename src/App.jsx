@@ -7,6 +7,7 @@ function App() {
   const [selectedTable, setSelectedTable] = createSignal('');
   const [currentPage, setCurrentPage] = createSignal(1);
   const [selectedDate, setSelectedDate] = createSignal('');
+  const [filteredDate, setFilteredDate] = createSignal('');
 
   const formattedUrl = () => {
     const url = datasetteUrl();
@@ -45,7 +46,7 @@ function App() {
   );
 
   const [tableData] = createResource(
-    () => selectedTable() && `${formattedUrl()}${selectedDatabase()}/${selectedTable()}.json${selectedDate() ? `&created__date=${selectedDate()}` : ''}`,
+    () => selectedTable() && `${formattedUrl()}${selectedDatabase()}/${selectedTable()}.json${filteredDate() ? `&created__date=${filteredDate()}` : ''}`,
     async (url) => {
       if (!url) return null;
       try {
@@ -64,6 +65,11 @@ function App() {
     const rows = tableData()?.rows || [];
     const startIndex = (currentPage() - 1);
     return rows[startIndex] ? [rows[startIndex]] : [];
+  };
+
+  const handleDateSubmit = () => {
+    setFilteredDate(selectedDate());
+    setCurrentPage(1); // Reset to the first page when filtering by date
   };
 
   return (
@@ -142,6 +148,7 @@ function App() {
                 type="date" 
                 onInput={(e) => setSelectedDate(e.target.value)} 
               />
+              <button class="button" onClick={handleDateSubmit}>Submit</button>
             </div>
           </div>
           <div class="table-container">
