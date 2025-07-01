@@ -67,75 +67,87 @@ function App() {
 
   return (
     <div class="container">
-      <p>This is a SolidJS application with Datasette backend support.</p>
+      <h1 class="title">SolidJS Datasette Integration</h1>
       
-      <div class="card">
-        <h2>Datasette Integration</h2>
+      <div class="box">
+        <h2 class="subtitle">Datasette Integration</h2>
         
-        <div class="input-group">
-          <label>Datasette URL:</label>
-          <input 
-            type="text" 
-            value={datasetteUrl()} 
-            onInput={(e) => setDatasetteUrl(e.target.value)}
-            placeholder="http://localhost:8001"
-          />
+        <div class="field">
+          <label class="label">Datasette URL:</label>
+          <div class="control">
+            <input 
+              class="input" 
+              type="text" 
+              value={datasetteUrl()} 
+              onInput={(e) => setDatasetteUrl(e.target.value)}
+              placeholder="http://localhost:8001"
+            />
+          </div>
         </div>
 
-        <div class="input-group">
-          <label>Database:</label>
-          <select 
-            value={selectedDatabase()} 
-            onChange={(e) => {
-              setSelectedDatabase(e.target.value);
-              setSelectedTable('');
-              setCurrentPage(1);
-            }}
-          >
-            <option value="">Select a database</option>
-            <Show when={databases()}>
-              <For each={databases()}>
-                {(db) => <option value={db}>{db}</option>}
-              </For>
-            </Show>
-          </select>
+        <div class="field">
+          <label class="label">Database:</label>
+          <div class="control">
+            <div class="select">
+              <select 
+                value={selectedDatabase()} 
+                onChange={(e) => {
+                  setSelectedDatabase(e.target.value);
+                  setSelectedTable('');
+                  setCurrentPage(1);
+                }}
+              >
+                <option value="">Select a database</option>
+                <Show when={databases()}>
+                  <For each={databases()}>
+                    {(db) => <option value={db}>{db}</option>}
+                  </For>
+                </Show>
+              </select>
+            </div>
+          </div>
         </div>
 
         <Show when={selectedDatabase()}>
-          <div class="input-group">
-            <label>Table:</label>
-            <select 
-              value={selectedTable()} 
-              onChange={(e) => {
-                setSelectedTable(e.target.value);
-                setCurrentPage(1);
-              }}
-            >
-              <option value="">Select a table</option>
-              <Show when={tables()}>
-                <For each={tables()}>
-                  {(table) => <option value={table}>{table}</option>}
-                </For>
-              </Show>
-            </select>
+          <div class="field">
+            <label class="label">Table:</label>
+            <div class="control">
+              <div class="select">
+                <select 
+                  value={selectedTable()} 
+                  onChange={(e) => {
+                    setSelectedTable(e.target.value);
+                    setCurrentPage(1);
+                  }}
+                >
+                  <option value="">Select a table</option>
+                  <Show when={tables()}>
+                    <For each={tables()}>
+                      {(table) => <option value={table}>{table}</option>}
+                    </For>
+                  </Show>
+                </select>
+              </div>
+            </div>
           </div>
         </Show>
 
         <Show when={tableData()}>
           <div class="table-container">
-            <h3>Table Data: {selectedTable()}</h3>
+            <h3 class="subtitle">Table Data: {selectedTable()}</h3>
             <div class="max-height">
               <div class="jump-to-page">
                 <label>Jump to page:</label>
                 <input 
+                  class="input" 
                   type="number" 
                   min={1} 
                   onInput={(e) => setCurrentPage(Number(e.target.value))} 
                   placeholder="Page"
                 />
-                <button onClick={() => setCurrentPage(1)}>1</button>
-                <button onClick={() => setCurrentPage(10)}>10</button>
-                <button onClick={() => setCurrentPage(100)}>100</button>
+                <button class="button" onClick={() => setCurrentPage(1)}>1</button>
+                <button class="button" onClick={() => setCurrentPage(10)}>10</button>
+                <button class="button" onClick={() => setCurrentPage(100)}>100</button>
               </div>
               <Show when={displayedRow().length > 0}>
                 <table class="table">
