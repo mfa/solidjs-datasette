@@ -45,7 +45,7 @@ function App() {
   );
 
   const [tableData] = createResource(
-    () => selectedTable() && `${formattedUrl()}${selectedDatabase()}/${selectedTable()}?created=${selectedDate()}`,
+    () => selectedTable() && `${formattedUrl()}${selectedDatabase()}/${selectedTable()}${selectedDate() ? `?created=${selectedDate()}` : ''}`,
     async (url) => {
       if (!url) return null;
       try {
@@ -55,8 +55,6 @@ function App() {
         return data;
       } catch (error) {
         console.error('Error fetching table data:', error);
-        const responseText = await error.response.text(); // Log the response text for debugging
-        console.error('Response text:', responseText);
         return null;
       }
     }
