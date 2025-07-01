@@ -67,7 +67,9 @@ function App() {
       if (!row.created) return false; // Skip rows without a created date
       const createdDate = new Date(row.created);
       if (isNaN(createdDate.getTime())) return false; // Skip invalid dates
-      return createdDate.toISOString().split('T')[0] === selectedDate();
+      const formattedCreatedDate = createdDate.toISOString().split('T')[0]; // Format to YYYY-MM-DD
+      console.log(`Comparing created date: ${formattedCreatedDate} with selected date: ${selectedDate()}`);
+      return formattedCreatedDate === selectedDate();
     });
     const startIndex = (currentPage() - 1);
     return filteredRows[startIndex] ? [filteredRows[startIndex]] : [];
