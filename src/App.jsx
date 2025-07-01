@@ -6,6 +6,7 @@ function App() {
   const [selectedDatabase, setSelectedDatabase] = createSignal('');
   const [selectedTable, setSelectedTable] = createSignal('');
   const [currentPage, setCurrentPage] = createSignal(1);
+  const [selectedDate, setSelectedDate] = createSignal('');
 
   const formattedUrl = () => {
     const url = datasetteUrl();
@@ -63,6 +64,12 @@ function App() {
     const rows = tableData()?.rows || [];
     const startIndex = (currentPage() - 1);
     return rows[startIndex] ? [rows[startIndex]] : [];
+  };
+
+  const filterByDate = (row) => {
+    if (!selectedDate()) return true; // No date filter applied
+    const createdDate = new Date(row.created).toISOString().split('T')[0]; // Format to YYYY-MM-DD
+    return createdDate === selectedDate();
   };
 
   return (
@@ -133,6 +140,16 @@ function App() {
         </Show>
 
         <Show when={tableData()}>
+          <div class="field">
+            <label class="label">Filter by Date:</label>
+            <div class="control">
+              <input 
+                class="input" 
+                type="date" 
+                onInput={(e) => setSelectedDate(e.target.value)} 
+              />
+            </div>
+          </div>
           <div class="table-container">
             <h3 class="subtitle">Table Data: {selectedTable()}</h3>
             <div class="max-height">
@@ -163,7 +180,7 @@ function App() {
                     </tr>
                   </thead>
                   <tbody>
-                    <For each={displayedRow()}>
+                    <For each={displayedRow().filter(filterByDate)}>
                       {(row) => (
                         <tr>
                           <For each={row}>
