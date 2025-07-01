@@ -46,7 +46,7 @@ function App() {
   );
 
   const [tableData] = createResource(
-    () => selectedTable() && `${formattedUrl()}${selectedDatabase()}/${selectedTable()}.json${filteredDate() ? `&created__date=${filteredDate()}` : ''}`,
+    () => selectedTable() && `${formattedUrl()}${selectedDatabase()}/${selectedTable()}.json${selectedDate() ? `?created__date=${selectedDate()}` : ''}`,
     async (url) => {
       if (!url) return null;
       try {
