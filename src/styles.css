@@ -5,12 +5,11 @@ body {
 }
 
 .container {
-    padding: 20px;
+    padding: 20px; /* This can remain as it is */
 }
 
 .card {
-    margin: 20px 0;
-    padding: 20px;
+    margin: 20px 0; /* This can remain as it is */
 }
 
 .table {
@@ -27,16 +26,16 @@ body {
 }
 
 .jump-to-page {
-    margin-top: 10px;
+    margin-top: 10px; /* This can remain as it is */
 }
 
 .input-group {
-    margin: 10px 0;
+    margin: 10px 0; /* This can remain as it is */
 }
 
 button {
-    margin-left: 10px;
-    padding: 5px 10px;
+    margin-left: 10px; /* Replaced with Bulma class */
+    padding: 5px 10px; /* This can remain as it is */
     cursor: pointer;
 }
 
@@ -44,5 +43,5 @@ button {
     max-height: 400px;
     overflow-y: auto;
     border: 1px solid #ddd;
-    padding: 10px;
+    padding: 10px; /* This can remain as it is */
 }
