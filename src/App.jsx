@@ -60,16 +60,15 @@ function App() {
     }
   );
 
-  const displayedRow = () => {
+  const displayedRows = () => {
     const rows = tableData()?.rows || [];
+    const filteredRows = rows.filter(row => {
+      if (!selectedDate()) return true; // No date filter applied
+      const createdDate = new Date(row.created).toISOString().split('T')[0]; // Format to YYYY-MM-DD
+      return createdDate === selectedDate();
+    });
     const startIndex = (currentPage() - 1);
-    return rows[startIndex] ? [rows[startIndex]] : [];
-  };
-
-  const filterByDate = (row) => {
-    if (!selectedDate()) return true; // No date filter applied
-    const createdDate = new Date(row.created).toISOString().split('T')[0]; // Format to YYYY-MM-DD
-    return createdDate === selectedDate();
+    return filteredRows[startIndex] ? [filteredRows[startIndex]] : [];
   };
 
   return (
@@ -166,7 +165,7 @@ function App() {
                 <button class="button" onClick={() => setCurrentPage(10)}>10</button>
                 <button class="button" onClick={() => setCurrentPage(100)}>100</button>
               </div>
-              <Show when={displayedRow().length > 0}>
+              <Show when={displayedRows().length > 0}>
                 <table class="table">
                   <thead>
                     <tr>
@@ -180,7 +179,7 @@ function App() {
                     </tr>
                   </thead>
                   <tbody>
-                    <For each={displayedRow().filter(filterByDate)}>
+                    <For each={displayedRows()}>
                       {(row) => (
                         <tr>
                           <For each={row}>
@@ -196,7 +195,7 @@ function App() {
                   </tbody>
                 </table>
               </Show>
-              <Show when={displayedRow().length === 0}>
+              <Show when={displayedRows().length === 0}>
                 <p>No data found in this table.</p>
               </Show>
             </div>
