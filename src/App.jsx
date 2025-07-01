@@ -29,11 +29,11 @@ function App() {
   );
 
   const [tables] = createResource(
-    () => selectedDatabase() && `${formattedUrl()}${selectedDatabase()}`,
+    () => selectedDatabase() && `${formattedUrl()}${selectedDatabase()}.json`,
     async (url) => {
       if (!url) return [];
       try {
-        const response = await fetch(`${url}.json`);
+        const response = await fetch(url);
         if (!response.ok) throw new Error(`Failed to fetch tables: ${response.statusText}`);
         const data = await response.json();
         return data.tables.map(table => table.name);
@@ -45,7 +45,7 @@ function App() {
   );
 
   const [tableData] = createResource(
-    () => selectedTable() && `${formattedUrl()}${selectedDatabase()}/${selectedTable()}${selectedDate() ? `?created=${selectedDate()}` : ''}`,
+    () => selectedTable() && `${formattedUrl()}${selectedDatabase()}/${selectedTable()}.json${selectedDate() ? `?created=${selectedDate()}` : ''}`,
     async (url) => {
       if (!url) return null;
       try {
