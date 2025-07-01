@@ -1,7 +1,7 @@
 {
-  "name": "solidjs-hello-world",
+  "name": "solidjs-datasette-integration",
   "version": "1.0.0",
-  "description": "A simple SolidJS hello world app",
+  "description": "A SolidJS application for integrating with Datasette",
   "type": "module",
   "scripts": {
     "dev": "bun run vite",
