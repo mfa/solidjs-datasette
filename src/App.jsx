@@ -55,6 +55,8 @@ function App() {
         return data;
       } catch (error) {
         console.error('Error fetching table data:', error);
+        const responseText = await error.response.text(); // Log the response text for debugging
+        console.error('Response text:', responseText);
         return null;
       }
     }
