@@ -64,8 +64,10 @@ function App() {
     const rows = tableData()?.rows || [];
     const filteredRows = rows.filter(row => {
       if (!selectedDate()) return true; // No date filter applied
-      const createdDate = new Date(row.created).toISOString().split('T')[0]; // Format to YYYY-MM-DD
-      return createdDate === selectedDate();
+      if (!row.created) return false; // Skip rows without a created date
+      const createdDate = new Date(row.created);
+      if (isNaN(createdDate.getTime())) return false; // Skip invalid dates
+      return createdDate.toISOString().split('T')[0] === selectedDate();
     });
     const startIndex = (currentPage() - 1);
     return filteredRows[startIndex] ? [filteredRows[startIndex]] : [];
