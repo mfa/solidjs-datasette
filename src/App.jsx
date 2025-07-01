@@ -7,7 +7,6 @@ function App() {
   const [selectedTable, setSelectedTable] = createSignal('');
   const [currentPage, setCurrentPage] = createSignal(1);
   const [selectedDate, setSelectedDate] = createSignal('');
-  const [filteredDate, setFilteredDate] = createSignal('');
 
   const formattedUrl = () => {
     const url = datasetteUrl();
@@ -68,7 +67,6 @@ function App() {
   };
 
   const handleDateSubmit = () => {
-    setFilteredDate(selectedDate());
     setCurrentPage(1); // Reset to the first page when filtering by date
   };
 
