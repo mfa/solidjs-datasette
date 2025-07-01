@@ -5,11 +5,11 @@ body {
 }
 
 .container {
-    padding: 20px; /* This can remain as it is */
+    padding: 20px; /* Removed custom padding */
 }
 
 .card {
-    margin: 20px 0; /* This can remain as it is */
+    margin: 20px 0; /* Removed custom margin */
 }
 
 .table {
@@ -18,7 +18,7 @@ body {
 
 .table th, .table td {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 8px; /* Removed custom padding */
 }
 
 .table th {
@@ -26,16 +26,16 @@ body {
 }
 
 .jump-to-page {
-    margin-top: 10px; /* This can remain as it is */
+    margin-top: 10px; /* Removed custom margin */
 }
 
 .input-group {
-    margin: 10px 0; /* This can remain as it is */
+    margin: 10px 0; /* Removed custom margin */
 }
 
 button {
-    margin-left: 10px; /* Replaced with Bulma class */
-    padding: 5px 10px; /* This can remain as it is */
+    margin-left: 10px; /* Removed custom margin */
+    padding: 5px 10px; /* Removed custom padding */
     cursor: pointer;
 }
 
@@ -43,5 +43,5 @@ button {
     max-height: 400px;
     overflow-y: auto;
     border: 1px solid #ddd;
-    padding: 10px; /* This can remain as it is */
+    padding: 10px; /* Removed custom padding */
 }
