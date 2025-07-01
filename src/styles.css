@@ -1,3 +1,5 @@
+@import '~bulma/css/bulma.css';
+
 body {
     font-family: Arial, sans-serif;
 }
@@ -9,7 +11,6 @@ body {
 .card {
     margin: 20px 0;
     padding: 20px;
-    border: 1px solid #ccc;
     border-radius: 5px;
 }
 
