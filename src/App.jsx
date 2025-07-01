@@ -45,11 +45,11 @@ function App() {
   );
 
   const [tableData] = createResource(
-    () => selectedTable() && `${formattedUrl()}${selectedDatabase()}/${selectedTable()}`,
+    () => selectedTable() && `${formattedUrl()}${selectedDatabase()}/${selectedTable()}?created=${selectedDate()}`,
     async (url) => {
       if (!url) return null;
       try {
-        const response = await fetch(`${url}.json`);
+        const response = await fetch(url);
         if (!response.ok) throw new Error(`Failed to fetch table data: ${response.statusText}`);
         const data = await response.json();
         return data;
@@ -62,14 +62,8 @@ function App() {
 
   const displayedRows = () => {
     const rows = tableData()?.rows || [];
-    const filteredRows = rows.filter(row => {
-      if (!selectedDate()) return true; // No date filter applied
-      if (!row.created) return false; // Skip rows without a created date
-      const createdDate = row.created.split('T')[0]; // Get the date part only
-      return createdDate === selectedDate(); // Check if the created date matches the selected date
-    });
     const startIndex = (currentPage() - 1);
-    return filteredRows[startIndex] ? [filteredRows[startIndex]] : [];
+    return rows[startIndex] ? [rows[startIndex]] : [];
   };
 
   return (
