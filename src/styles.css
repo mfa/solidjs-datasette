@@ -9,7 +9,7 @@ body {
 }
 
 .card {
-    margin: 20px 0; /* This can remain as it is */
+    margin: 20px 0; /* Replaced with Bulma class */
 }
 
 .table {
@@ -21,7 +21,7 @@ body {
 }
 
 .jump-to-page {
-    margin-top: 10px; /* This can remain as it is */
+    margin-top: 10px; /* Replaced with Bulma class */
 }
 
 button {
